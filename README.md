@@ -1,3 +1,6 @@
-## Practice 2
+## HW 3
+https://github.com/Focus1337/React-Native-Dev/assets/27139592/11c17465-a4db-4cbb-abaf-b74f730377ca
+
+## HW 2
 https://github.com/Focus1337/React-Native-Dev/assets/27139592/383b462c-2d8b-4d5c-ad0a-1f2a709cff15
 
