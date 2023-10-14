@@ -1,9 +1,9 @@
 import {SafeAreaView, StyleSheet} from "react-native";
-import {DoneListScreenProps} from "../types";
-import {TodoList} from "../components/todo/TodoList";
+import {DoneListScreenProps} from "../../types";
+import {TodoList} from "../../components/todo/TodoList";
 import {useSelector} from "react-redux";
-import {RootState} from "../redux/todoSlice";
-import CustomButton from "../components/CustomButton";
+import {RootState} from "../../redux/todoSlice";
+import CustomButton from "../../components/CustomButton";
 
 export default function DoneListScreen({navigation}: DoneListScreenProps) {
     const todoList = useSelector((state: RootState) => state.todo.todoList);

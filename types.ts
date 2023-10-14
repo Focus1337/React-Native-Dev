@@ -1,5 +1,19 @@
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 
+export type StackParamList = {
+    Tab: undefined,
+    About: undefined
+};
+
+export type TabScreenProps = NativeStackScreenProps<StackParamList, 'Tab'>;
+
+export type TabParamList = {
+    Home: undefined;
+    News: undefined;
+    Chat: undefined;
+    Settings: undefined;
+};
+
 export type NativeStackParamList = {
     Main: undefined;
     TodoItem: { itemId: string };
