@@ -1,3 +1,7 @@
+## HW 4
+https://github.com/Focus1337/React-Native-Dev/assets/27139592/299de5e9-8e47-48f3-a1e7-7cf98badbcad
+
+
 ## HW 3
 https://github.com/Focus1337/React-Native-Dev/assets/27139592/11c17465-a4db-4cbb-abaf-b74f730377ca
 

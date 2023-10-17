@@ -1,10 +1,10 @@
 import {SafeAreaView, StyleSheet, Text, View} from "react-native";
-import {TodoItemScreenProps} from "../types";
-import CustomButton from "../components/CustomButton";
+import {TodoItemScreenProps} from "../../types";
+import CustomButton from "../../components/CustomButton";
 import {useDispatch, useSelector} from "react-redux";
-import {completeTodoItem, removeTodoItem, RootState} from "../redux/todoSlice";
+import {completeTodoItem, removeTodoItem, RootState} from "../../redux/todoSlice";
 import {useEffect, useState} from "react";
-import ITodoItem from "../models/ITodoItem";
+import ITodoItem from "../../models/ITodoItem";
 
 export default function TodoItemScreen({navigation, route}: TodoItemScreenProps) {
     const todoList = useSelector((state: RootState) => state.todo.todoList);

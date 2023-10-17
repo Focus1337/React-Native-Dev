@@ -1,12 +1,12 @@
 import {SafeAreaView, StyleSheet, TextInput, View} from "react-native";
-import {TodoList} from "../components/todo/TodoList";
-import ITodoItem from "../models/ITodoItem";
-import {addTodoItem, RootState} from "../redux/todoSlice";
+import {TodoList} from "../../components/todo/TodoList";
+import ITodoItem from "../../models/ITodoItem";
+import {addTodoItem, RootState} from "../../redux/todoSlice";
 import {useDispatch, useSelector} from "react-redux";
 import 'react-native-get-random-values'
 import {v4 as uuidv4} from 'uuid';
-import {MainScreenProps} from "../types";
-import CustomButton from "../components/CustomButton";
+import {MainScreenProps} from "../../types";
+import CustomButton from "../../components/CustomButton";
 import React, {useState} from "react";
 
 export default function MainScreen({navigation}: MainScreenProps) {
