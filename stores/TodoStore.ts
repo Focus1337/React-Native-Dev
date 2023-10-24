@@ -1,8 +1,8 @@
 import {makeAutoObservable} from "mobx";
-import {TodoModel} from "../models/TodoModel";
-import TodoService from "../repositories/TodoService";
+import {TodoModel} from "../modules/todo/TodoModel";
+import TodoService from "../modules/todo/TodoService";
 
-export class TodoViewModel {
+export class TodoStore {
     todoModel: TodoModel[] = [];
     isLoading = false;
     todoService: TodoService;
@@ -14,7 +14,7 @@ export class TodoViewModel {
 
     getObjectFromService() {
         this.setIsLoading(true);
-        this.todoService.getTodos()
+        this.todoService.getTodosAsync()
             .then(model => {
                 this.setTodoModel(model);
             })

@@ -1,13 +1,13 @@
 import React from "react";
-import {TodoViewModel} from "./TodoViewModel";
+import {TodoStore} from "./TodoStore";
 import {LogsStore} from "./LogsStore";
 
 class RootStore {
-    todoViewModel: TodoViewModel;
+    todoViewModel: TodoStore;
     logsStore: LogsStore;
 
     constructor() {
-        this.todoViewModel = new TodoViewModel();
+        this.todoViewModel = new TodoStore();
         this.logsStore = new LogsStore();
     }
 }

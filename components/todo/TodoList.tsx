@@ -1,21 +1,19 @@
-import {FlatList, StyleSheet, Text, View} from "react-native";
+import {FlatList, StyleSheet, View} from "react-native";
 import TodoItem from "./TodoItem";
-import {TodoModel} from "../../models/TodoModel";
+import {TodoModel} from "../../modules/todo/TodoModel";
 
 interface TodoListProps {
     todos: TodoModel[],
-    doneTodos: boolean
 }
 
-export function TodoList({todos, doneTodos}: TodoListProps) {
+export function TodoList({todos}: TodoListProps) {
     return (
         <View style={styles.container}>
-            <Text style={{alignSelf: 'center', fontWeight: 'bold'}}>{doneTodos ? 'Completed Tasks' : 'New Tasks'}</Text>
             <FlatList
                 data={todos}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({item, index}) =>
-                    <TodoItem listId={index} id={item.id} title={`${item.title}`} done={doneTodos}/>}
+                    <TodoItem listId={index} id={item.id} title={`${item.title}`} done={item.completed}/>}
             />
         </View>
     );

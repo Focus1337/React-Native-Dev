@@ -1,4 +1,4 @@
-import {SafeAreaView, StyleSheet, TextInput, View} from "react-native";
+import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
 import {TodoList} from "../../components/todo/TodoList";
 import 'react-native-get-random-values'
 import {v4 as uuidv4} from 'uuid';
@@ -7,7 +7,7 @@ import CustomButton from "../../components/CustomButton";
 import React, {useEffect, useState} from "react";
 import {useRootStore} from "../../hooks/useRootStore";
 import {observer} from "mobx-react";
-import {TodoModel} from "../../models/TodoModel";
+import {TodoModel} from "../../modules/todo/TodoModel";
 import {Skeleton, SkeletonGroup} from "react-native-skeleton-loaders";
 
 export const MainScreen = observer(({navigation}: MainScreenProps) => {
@@ -35,8 +35,9 @@ export const MainScreen = observer(({navigation}: MainScreenProps) => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <Text style={{alignSelf: 'center', fontWeight: 'bold'}}>New Tasks</Text>
             {todoViewModel.isLoading ? <LoadingContent/> :
-                <TodoList todos={todoViewModel.todoModel.slice().filter(item => !item.completed)} doneTodos={false}/>}
+                <TodoList todos={todoViewModel.todoModel.slice().filter(item => !item.completed)}/>}
             <View style={styles.inputContainer}>
                 <TextInput style={styles.textInput} multiline={true} placeholder='Make a sandwich' value={title}
                            onChangeText={newText => setTitle(newText)}/>
@@ -50,9 +51,11 @@ export const MainScreen = observer(({navigation}: MainScreenProps) => {
 
 const LoadingContent = () => {
     return (
-        <SkeletonGroup numberOfItems={19} direction={"column"}>
-            <Skeleton w={390} h={30} mX={10}/>
-        </SkeletonGroup>
+        <ScrollView style={{flex: 1}}>
+            <SkeletonGroup numberOfItems={19} direction={"column"}>
+                <Skeleton w={390} h={30} mX={10}/>
+            </SkeletonGroup>
+        </ScrollView>
     );
 };
 

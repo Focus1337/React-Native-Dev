@@ -1,5 +1,5 @@
 import TodoRepository from "./TodoRepository";
-import {TodoModel} from "../models/TodoModel";
+import {TodoModel} from "./TodoModel";
 
 export default class TodoService {
     private readonly todoRepository: TodoRepository;
@@ -8,24 +8,23 @@ export default class TodoService {
         this.todoRepository = new TodoRepository();
     }
 
-    getTodos = async () =>
-        this.todoRepository.getAllAsync();
+    getTodosAsync = async () =>
+        await this.todoRepository.getAllAsync();
 
-    addTodo = async (model: TodoModel[], item: TodoModel) => {
+    addTodo = (model: TodoModel[], item: TodoModel) => {
         model.push(item);
         return model;
     };
 
-    removeTodo = async (model: TodoModel[], id: string) => {
+    removeTodo = (model: TodoModel[], id: string) => {
         return model.filter(todo => todo.id !== id);
     };
 
-    markAsCompleteTodo = async (model: TodoModel[], id: string) => {
-        return model.map(item => {
+    markAsCompleteTodo = (model: TodoModel[], id: string) =>
+        model.map(item => {
             if (item.id === id) {
                 return {...item, completed: !item.completed};
             }
             return item;
         });
-    };
 }

@@ -4,7 +4,7 @@ import CustomButton from "../../components/CustomButton";
 import {useEffect, useState} from "react";
 import {observer} from "mobx-react";
 import {useRootStore} from "../../hooks/useRootStore";
-import {TodoModel} from "../../models/TodoModel";
+import {TodoModel} from "../../modules/todo/TodoModel";
 
 export const TodoItemScreen = observer(({navigation, route}: TodoItemScreenProps) => {
     const {todoViewModel, logsStore} = useRootStore();

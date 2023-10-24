@@ -1,4 +1,4 @@
-import {SafeAreaView, StyleSheet} from "react-native";
+import {SafeAreaView, StyleSheet, Text} from "react-native";
 import {DoneListScreenProps} from "../../utils/types";
 import {TodoList} from "../../components/todo/TodoList";
 import CustomButton from "../../components/CustomButton";
@@ -12,7 +12,8 @@ export const DoneListScreen = observer(({navigation}: DoneListScreenProps) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <TodoList todos={completedTodos()} doneTodos={true}/>
+            <Text style={{alignSelf: 'center', fontWeight: 'bold'}}>{'Completed Tasks'}</Text>
+            <TodoList todos={completedTodos()}/>
             <CustomButton onPress={() => navigation.goBack()} title={'Back to tasks'}/>
         </SafeAreaView>
     );

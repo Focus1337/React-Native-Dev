@@ -1,9 +1,9 @@
-import axios from "../utils/axios";
-import {TodoModel} from "../models/TodoModel";
+import axios from "../../utils/axios";
+import {TodoModel} from "./TodoModel";
 import 'react-native-get-random-values'
 import {v4 as uuidv4} from 'uuid';
-import {IRepository} from "./IRepository";
-import {ExternalTodoModel} from "../models/ExternalTodoModel";
+import {IRepository} from "../../repositories/IRepository";
+import {ExternalTodoModel} from "./ExternalTodoModel";
 
 export default class TodoRepository implements IRepository<TodoModel> {
     async getAllAsync(): Promise<TodoModel[]> {
