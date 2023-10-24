@@ -1,15 +1,16 @@
 import {SafeAreaView, StyleSheet, Text, View} from "react-native";
 import {TodoItemScreenProps} from "../../types";
 import CustomButton from "../../components/CustomButton";
-import {useDispatch, useSelector} from "react-redux";
-import {completeTodoItem, removeTodoItem, RootState} from "../../redux/todoSlice";
 import {useEffect, useState} from "react";
 import ITodoItem from "../../models/ITodoItem";
+import {observer} from "mobx-react";
+import {useRootStore} from "../../hooks/useRootStore";
 
-export default function TodoItemScreen({navigation, route}: TodoItemScreenProps) {
-    const todoList = useSelector((state: RootState) => state.todo.todoList);
-    const dispatch = useDispatch();
+export const TodoItemScreen = observer(({navigation, route}: TodoItemScreenProps) => {
+    const {todoStore, logsStore} = useRootStore();
     let [currentItem, setCurrentItem] = useState<ITodoItem>(null);
+
+    let todoList = todoStore.todoList;
 
     useEffect(() => {
         if (todoList.length > 0) {
@@ -18,14 +19,16 @@ export default function TodoItemScreen({navigation, route}: TodoItemScreenProps)
     }, [todoList]);
 
     const handleRemoveTodoItem = () => {
-        dispatch(removeTodoItem(route.params.itemId));
+        todoStore.actionRemoveTodo(route.params.itemId);
+        logsStore.actionAddLog(`[Rm]: ${currentItem.title}`);
 
         if (navigation.canGoBack())
             navigation.goBack();
     };
 
     const handleCompleteTodoItem = () => {
-        dispatch(completeTodoItem(route.params.itemId));
+        todoStore.actionMarkAsDone(route.params.itemId);
+        logsStore.actionAddLog(`[MarkAsDone]: ${currentItem.title}`);
     };
 
     return (
@@ -57,7 +60,7 @@ export default function TodoItemScreen({navigation, route}: TodoItemScreenProps)
             </View>
         </SafeAreaView>)
     );
-}
+});
 
 let styles = StyleSheet.create({
     viewContainer: {

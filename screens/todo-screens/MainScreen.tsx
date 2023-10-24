@@ -1,18 +1,17 @@
 import {SafeAreaView, StyleSheet, TextInput, View} from "react-native";
 import {TodoList} from "../../components/todo/TodoList";
 import ITodoItem from "../../models/ITodoItem";
-import {addTodoItem, RootState} from "../../redux/todoSlice";
-import {useDispatch, useSelector} from "react-redux";
 import 'react-native-get-random-values'
 import {v4 as uuidv4} from 'uuid';
 import {MainScreenProps} from "../../types";
 import CustomButton from "../../components/CustomButton";
 import React, {useState} from "react";
+import {useRootStore} from "../../hooks/useRootStore";
+import {observer} from "mobx-react";
 
-export default function MainScreen({navigation}: MainScreenProps) {
+export const MainScreen = observer(({navigation}: MainScreenProps) => {
     let [title, setTitle] = useState<string>('');
-    const todoList = useSelector((state: RootState) => state.todo.todoList);
-    const dispatch = useDispatch();
+    let {todoStore, logsStore} = useRootStore();
 
     const handleAddTodoItem = () => {
         if (title === '') return;
@@ -22,26 +21,27 @@ export default function MainScreen({navigation}: MainScreenProps) {
             isDone: false,
             createdDate: new Date().toLocaleDateString()
         };
-        dispatch(addTodoItem(newTodoItemData));
+        todoStore.actionAddTodo(newTodoItemData);
+        logsStore.actionAddLog(`[Add]: ${newTodoItemData.title}`);
         setTitle('');
     };
 
-    const handleNavigationToCompletedTasks = function () {
-        navigation.navigate('DoneList');
-    };
+    const handleNavigationToCompletedTasks = () => navigation.navigate('DoneList');
+    const handleNavigationToLogs = () => navigation.navigate('Logs');
 
     return (
         <SafeAreaView style={styles.container}>
-            <TodoList todos={todoList.filter(item => !item.isDone)} doneTodos={false}/>
+            <TodoList todos={todoStore.todoList.slice().filter(item => !item.isDone)} doneTodos={false}/>
             <View style={styles.inputContainer}>
                 <TextInput style={styles.textInput} multiline={true} placeholder='Make a sandwich' value={title}
                            onChangeText={newText => setTitle(newText)}/>
                 <CustomButton title="ADD" onPress={handleAddTodoItem}/>
                 <CustomButton title="Completed tasks" onPress={handleNavigationToCompletedTasks}/>
+                <CustomButton title="Logs" onPress={handleNavigationToLogs}/>
             </View>
         </SafeAreaView>
     )
-}
+})
 
 let styles = StyleSheet.create({
     container: {

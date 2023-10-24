@@ -1,20 +1,22 @@
 import {SafeAreaView, StyleSheet} from "react-native";
 import {DoneListScreenProps} from "../../types";
 import {TodoList} from "../../components/todo/TodoList";
-import {useSelector} from "react-redux";
-import {RootState} from "../../redux/todoSlice";
 import CustomButton from "../../components/CustomButton";
+import {observer} from "mobx-react";
+import {useRootStore} from "../../hooks/useRootStore";
 
-export default function DoneListScreen({navigation}: DoneListScreenProps) {
-    const todoList = useSelector((state: RootState) => state.todo.todoList);
+export const DoneListScreen = observer(({navigation}: DoneListScreenProps) => {
+    const {todoStore} = useRootStore();
+
+    let completedTodos = () => todoStore.todoList.filter(todo => todo.isDone);
 
     return (
         <SafeAreaView style={styles.container}>
-            <TodoList todos={todoList.filter(item => item.isDone)} doneTodos={true}/>
+            <TodoList todos={completedTodos()} doneTodos={true}/>
             <CustomButton onPress={() => navigation.goBack()} title={'Back to tasks'}/>
         </SafeAreaView>
     );
-}
+});
 
 let styles = StyleSheet.create({
     container: {
