@@ -2,7 +2,7 @@ import {observer} from "mobx-react";
 import {FlatList, SafeAreaView, StyleSheet, Text, View} from "react-native";
 import {useRootStore} from "../hooks/useRootStore";
 import CustomButton from "../components/CustomButton";
-import {LogsScreenProps} from "../types";
+import {LogsScreenProps} from "../utils/types";
 
 export const LogsScreen = observer(
     ({navigation}: LogsScreenProps) => {
@@ -13,8 +13,8 @@ export const LogsScreen = observer(
                     <Text style={{alignSelf: 'center', fontWeight: 'bold'}}>Logs</Text>
                     <FlatList
                         data={logsStore.logs}
-                        keyExtractor={(item, index) => index.toString()}
-                        renderItem={({item, index}) => <LogItem logItem={item}/>}
+                        keyExtractor={(_, index) => index.toString()}
+                        renderItem={({item}) => <LogItem logItem={item}/>}
                     />
                 </View>
                 <CustomButton onPress={() => navigation.goBack()} title={'Back to tasks'}/>

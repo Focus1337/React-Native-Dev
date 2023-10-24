@@ -1,6 +1,6 @@
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
-import {MainScreenProps} from "../../types";
+import {MainScreenProps} from "../../utils/types";
 
 interface TodoItemProps {
     title: string,

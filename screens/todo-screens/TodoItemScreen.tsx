@@ -1,34 +1,44 @@
 import {SafeAreaView, StyleSheet, Text, View} from "react-native";
-import {TodoItemScreenProps} from "../../types";
+import {TodoItemScreenProps} from "../../utils/types";
 import CustomButton from "../../components/CustomButton";
 import {useEffect, useState} from "react";
-import ITodoItem from "../../models/ITodoItem";
 import {observer} from "mobx-react";
 import {useRootStore} from "../../hooks/useRootStore";
+import {TodoModel} from "../../models/TodoModel";
 
 export const TodoItemScreen = observer(({navigation, route}: TodoItemScreenProps) => {
-    const {todoStore, logsStore} = useRootStore();
-    let [currentItem, setCurrentItem] = useState<ITodoItem>(null);
+    const {todoViewModel, logsStore} = useRootStore();
+    let [currentItem, setCurrentItem] = useState<TodoModel>(null);
 
-    let todoList = todoStore.todoList;
+    let todoList = todoViewModel.todoModel;
 
     useEffect(() => {
         if (todoList.length > 0) {
-            setCurrentItem(todoList.find(item => item.id == route.params.itemId));
+            setCurrentItem(todoList.find(item => item.id === route.params.itemId));
         }
     }, [todoList]);
 
     const handleRemoveTodoItem = () => {
-        todoStore.actionRemoveTodo(route.params.itemId);
-        logsStore.actionAddLog(`[Rm]: ${currentItem.title}`);
+        todoViewModel.actionHandleRemoveTodo(route.params.itemId)
+            .then(() => {
+                logsStore.actionAddLog(`[Rm]: ${currentItem.title}`);
 
-        if (navigation.canGoBack())
-            navigation.goBack();
+                if (navigation.canGoBack())
+                    navigation.goBack();
+            })
+            .catch((reason) => {
+                alert(reason);
+            });
     };
 
     const handleCompleteTodoItem = () => {
-        todoStore.actionMarkAsDone(route.params.itemId);
-        logsStore.actionAddLog(`[MarkAsDone]: ${currentItem.title}`);
+        todoViewModel.actionHandleMarkAsComplete(route.params.itemId)
+            .then(() => {
+                logsStore.actionAddLog(`[MarkAsDone]: ${currentItem.title}`);
+            })
+            .catch((reason) => {
+                alert(reason);
+            });
     };
 
     return (
@@ -40,22 +50,22 @@ export const TodoItemScreen = observer(({navigation, route}: TodoItemScreenProps
             <View style={styles.todoContainer}>
                 <View style={styles.todoTitle}>
                     <Text
-                        style={[currentItem.isDone ? {textDecorationLine: 'line-through'} : {textDecorationLine: 'none'},
+                        style={[currentItem.completed ? {textDecorationLine: 'line-through'} : {textDecorationLine: 'none'},
                             styles.todoText]}>{currentItem.title}</Text>
                 </View>
                 <View style={styles.todoMetadata}>
                     {
-                        currentItem.isDone ?
+                        currentItem.completed ?
                             <Text style={{color: 'seagreen'}}>Completed</Text>
                             :
                             <Text style={{color: 'coral'}}>Not completed</Text>
                     }
-                    <Text>Created at {currentItem.createdDate}</Text>
+                    <Text>Created at [unavailable]</Text>
                 </View>
             </View>
 
             <View style={styles.inputContainer}>
-                <CustomButton onPress={handleCompleteTodoItem} title={currentItem.isDone ? 'Undone' : 'Mark Done'}/>
+                <CustomButton onPress={handleCompleteTodoItem} title={currentItem.completed ? 'Undone' : 'Mark Done'}/>
                 <CustomButton onPress={handleRemoveTodoItem} title={'Delete'}/>
             </View>
         </SafeAreaView>)

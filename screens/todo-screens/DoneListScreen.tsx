@@ -1,14 +1,14 @@
 import {SafeAreaView, StyleSheet} from "react-native";
-import {DoneListScreenProps} from "../../types";
+import {DoneListScreenProps} from "../../utils/types";
 import {TodoList} from "../../components/todo/TodoList";
 import CustomButton from "../../components/CustomButton";
 import {observer} from "mobx-react";
 import {useRootStore} from "../../hooks/useRootStore";
 
 export const DoneListScreen = observer(({navigation}: DoneListScreenProps) => {
-    const {todoStore} = useRootStore();
+    const {todoViewModel} = useRootStore();
 
-    let completedTodos = () => todoStore.todoList.filter(todo => todo.isDone);
+    let completedTodos = () => todoViewModel.todoModel.filter(todo => todo.completed);
 
     return (
         <SafeAreaView style={styles.container}>

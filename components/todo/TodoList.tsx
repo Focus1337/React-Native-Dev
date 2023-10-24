@@ -1,9 +1,9 @@
 import {FlatList, StyleSheet, Text, View} from "react-native";
-import ITodoItem from "../../models/ITodoItem";
 import TodoItem from "./TodoItem";
+import {TodoModel} from "../../models/TodoModel";
 
 interface TodoListProps {
-    todos: ITodoItem[],
+    todos: TodoModel[],
     doneTodos: boolean
 }
 

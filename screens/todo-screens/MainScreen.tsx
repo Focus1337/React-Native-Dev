@@ -1,27 +1,31 @@
 import {SafeAreaView, StyleSheet, TextInput, View} from "react-native";
 import {TodoList} from "../../components/todo/TodoList";
-import ITodoItem from "../../models/ITodoItem";
 import 'react-native-get-random-values'
 import {v4 as uuidv4} from 'uuid';
-import {MainScreenProps} from "../../types";
+import {MainScreenProps} from "../../utils/types";
 import CustomButton from "../../components/CustomButton";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useRootStore} from "../../hooks/useRootStore";
 import {observer} from "mobx-react";
+import {TodoModel} from "../../models/TodoModel";
+import {Skeleton, SkeletonGroup} from "react-native-skeleton-loaders";
 
 export const MainScreen = observer(({navigation}: MainScreenProps) => {
     let [title, setTitle] = useState<string>('');
-    let {todoStore, logsStore} = useRootStore();
+    let {todoViewModel, logsStore} = useRootStore();
+
+    useEffect(() => {
+        todoViewModel.getObjectFromService();
+    }, []);
 
     const handleAddTodoItem = () => {
         if (title === '') return;
-        const newTodoItemData: ITodoItem = {
+        const newTodoItemData: TodoModel = {
             id: uuidv4(),
             title: title,
-            isDone: false,
-            createdDate: new Date().toLocaleDateString()
+            completed: false,
         };
-        todoStore.actionAddTodo(newTodoItemData);
+        todoViewModel.actionHandleAddTodo(newTodoItemData);
         logsStore.actionAddLog(`[Add]: ${newTodoItemData.title}`);
         setTitle('');
     };
@@ -31,7 +35,8 @@ export const MainScreen = observer(({navigation}: MainScreenProps) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <TodoList todos={todoStore.todoList.slice().filter(item => !item.isDone)} doneTodos={false}/>
+            {todoViewModel.isLoading ? <LoadingContent/> :
+                <TodoList todos={todoViewModel.todoModel.slice().filter(item => !item.completed)} doneTodos={false}/>}
             <View style={styles.inputContainer}>
                 <TextInput style={styles.textInput} multiline={true} placeholder='Make a sandwich' value={title}
                            onChangeText={newText => setTitle(newText)}/>
@@ -42,6 +47,14 @@ export const MainScreen = observer(({navigation}: MainScreenProps) => {
         </SafeAreaView>
     )
 })
+
+const LoadingContent = () => {
+    return (
+        <SkeletonGroup numberOfItems={19} direction={"column"}>
+            <Skeleton w={390} h={30} mX={10}/>
+        </SkeletonGroup>
+    );
+};
 
 let styles = StyleSheet.create({
     container: {

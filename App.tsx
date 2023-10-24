@@ -3,7 +3,7 @@ import {MainScreen} from "./screens/todo-screens/MainScreen";
 import {TodoItemScreen} from "./screens/todo-screens/TodoItemScreen";
 import {DoneListScreen} from "./screens/todo-screens/DoneListScreen";
 import {StatusBar} from "react-native";
-import {NativeStackParamList} from "./types";
+import {NativeStackParamList} from "./utils/types";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {LogsScreen} from "./screens/LogsScreen";
 
