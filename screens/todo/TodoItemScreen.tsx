@@ -19,26 +19,25 @@ export const TodoItemScreen = observer(({navigation, route}: TodoItemScreenProps
     }, [todoList]);
 
     const handleRemoveTodoItem = () => {
-        todoViewModel.actionHandleRemoveTodo(route.params.itemId)
-            .then(() => {
-                logsStore.actionAddLog(`[Rm]: ${currentItem.title}`);
+        try {
+            todoViewModel.actionHandleRemoveTodo(route.params.itemId);
+            logsStore.actionAddLog(`[Rm]: ${currentItem.title}`);
 
-                if (navigation.canGoBack())
-                    navigation.goBack();
-            })
-            .catch((reason) => {
-                alert(reason);
-            });
+            if (navigation.canGoBack())
+                navigation.goBack();
+
+        } catch (reason) {
+            alert(reason);
+        }
     };
 
     const handleCompleteTodoItem = () => {
-        todoViewModel.actionHandleMarkAsComplete(route.params.itemId)
-            .then(() => {
-                logsStore.actionAddLog(`[MarkAsDone]: ${currentItem.title}`);
-            })
-            .catch((reason) => {
-                alert(reason);
-            });
+        try {
+            todoViewModel.actionHandleMarkAsComplete(route.params.itemId);
+            logsStore.actionAddLog(`[MarkAsDone]: ${currentItem.title}`);
+        } catch (reason) {
+            alert(reason);
+        }
     };
 
     return (

@@ -10,14 +10,10 @@ export default class TodoRepository implements IRepository<TodoModel> {
         let value = await axios.get<ExternalTodoModel[]>('/todos?_start=0&_limit=30');
         let externalModel = value.data;
 
-        return externalModel.map((model) => {
-            return {
-                id: uuidv4(),
-                title: model.title,
-                completed: model.completed
-            };
-        });
+        return externalModel.map((model: ExternalTodoModel) => ({
+            id: uuidv4(),
+            title: model.title,
+            completed: model.completed
+        }));
     }
-
 }
-
