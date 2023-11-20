@@ -12,13 +12,13 @@ export class TodoStore {
         this.todoService = new TodoService();
     }
 
-    getObjectFromService() {
+    actionHandleGetTodo() {
         this.setIsLoading(true);
         this.todoService.getTodosAsync()
             .then(model => {
                 this.setTodoModel(model);
             })
-            .finally(() => setTimeout(() => this.setIsLoading(false), 5000))
+            .finally(() => setTimeout(() => this.setIsLoading(false), 0))
     }
 
     actionHandleAddTodo = (newTodo: TodoModel) => {

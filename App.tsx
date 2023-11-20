@@ -5,7 +5,7 @@ import {DoneListScreen} from "./screens/todo/DoneListScreen";
 import {StatusBar} from "react-native";
 import {NativeStackParamList} from "./utils/types";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
-import {LogsScreen} from "./screens/LogsScreen";
+import {LogsScreen} from "./screens/log/LogsScreen";
 
 const Stack = createNativeStackNavigator<NativeStackParamList>();
 export default function App() {

@@ -1,19 +1,16 @@
-import axios from "../../utils/axios";
-import {TodoModel} from "./TodoModel";
 import 'react-native-get-random-values'
-import {v4 as uuidv4} from 'uuid';
-import {IRepository} from "../../repositories/IRepository";
-import {ExternalTodoModel} from "./ExternalTodoModel";
+import {RemoteTodoModel} from "./RemoteTodoModel";
+import AxiosClient from "../../utils/clients/AxiosClient";
 
-export default class TodoRepository implements IRepository<TodoModel> {
-    async getAllAsync(): Promise<TodoModel[]> {
-        let value = await axios.get<ExternalTodoModel[]>('/todos?_start=0&_limit=30');
-        let externalModel = value.data;
+export default class TodoRepository {
+    private readonly apiClient: AxiosClient;
 
-        return externalModel.map((model: ExternalTodoModel) => ({
-            id: uuidv4(),
-            title: model.title,
-            completed: model.completed
-        }));
+    constructor() {
+        this.apiClient = new AxiosClient(null);
+    }
+
+    async getAllAsync(): Promise<RemoteTodoModel[]> {
+        let value = await this.apiClient.get<RemoteTodoModel[]>({url: '/todos?_start=0&_limit=30'});
+        return value.data;
     }
 }

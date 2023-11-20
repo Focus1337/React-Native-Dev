@@ -18,10 +18,10 @@ export const TodoItemScreen = observer(({navigation, route}: TodoItemScreenProps
         }
     }, [todoList]);
 
-    const handleRemoveTodoItem = () => {
+    const handleRemoveTodoItem = async () => {
         try {
             todoViewModel.actionHandleRemoveTodo(route.params.itemId);
-            logsStore.actionAddLog(`[Rm]: ${currentItem.title}`);
+            await logsStore.actionHandleAddLog("Rm", currentItem.title);
 
             if (navigation.canGoBack())
                 navigation.goBack();
@@ -31,10 +31,10 @@ export const TodoItemScreen = observer(({navigation, route}: TodoItemScreenProps
         }
     };
 
-    const handleCompleteTodoItem = () => {
+    const handleCompleteTodoItem = async () => {
         try {
             todoViewModel.actionHandleMarkAsComplete(route.params.itemId);
-            logsStore.actionAddLog(`[MarkAsDone]: ${currentItem.title}`);
+            await logsStore.actionHandleAddLog("MarkAsDone", currentItem.title);
         } catch (reason) {
             alert(reason);
         }

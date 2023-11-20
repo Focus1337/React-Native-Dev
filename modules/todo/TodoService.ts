@@ -1,5 +1,7 @@
 import TodoRepository from "./TodoRepository";
 import {TodoModel} from "./TodoModel";
+import {RemoteTodoModel} from "./RemoteTodoModel";
+import {v4 as uuidv4} from "uuid";
 
 export default class TodoService {
     private readonly todoRepository: TodoRepository;
@@ -8,10 +10,17 @@ export default class TodoService {
         this.todoRepository = new TodoRepository();
     }
 
-    getTodosAsync = async () =>
-        await this.todoRepository.getAllAsync();
+    getTodosAsync = async (): Promise<TodoModel[]> => {
+        let data = await this.todoRepository.getAllAsync();
 
-    addTodo = (model: TodoModel[], item: TodoModel) => {
+        return data.map((model: RemoteTodoModel) => ({
+            id: uuidv4(),
+            title: model.title,
+            completed: model.completed
+        }));
+    };
+
+    addTodo = (model: TodoModel[], item: TodoModel): TodoModel[] => {
         model.push(item);
         return model;
     };

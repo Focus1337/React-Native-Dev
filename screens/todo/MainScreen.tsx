@@ -15,10 +15,10 @@ export const MainScreen = observer(({navigation}: MainScreenProps) => {
     let {todoViewModel, logsStore} = useRootStore();
 
     useEffect(() => {
-        todoViewModel.getObjectFromService();
+        todoViewModel.actionHandleGetTodo();
     }, []);
 
-    const handleAddTodoItem = () => {
+    const handleAddTodoItem = async () => {
         if (title === '') return;
         const newTodoItemData: TodoModel = {
             id: uuidv4(),
@@ -26,7 +26,7 @@ export const MainScreen = observer(({navigation}: MainScreenProps) => {
             completed: false,
         };
         todoViewModel.actionHandleAddTodo(newTodoItemData);
-        logsStore.actionAddLog(`[Add]: ${newTodoItemData.title}`);
+        await logsStore.actionHandleAddLog("Add", newTodoItemData.title);
         setTitle('');
     };
 
