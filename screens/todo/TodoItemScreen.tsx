@@ -1,4 +1,4 @@
-import {SafeAreaView, StyleSheet, Text, View} from "react-native";
+import {Alert, SafeAreaView, StyleSheet, Text, View} from "react-native";
 import {TodoItemScreenProps} from "../../utils/types";
 import CustomButton from "../../components/CustomButton";
 import {useEffect, useState} from "react";
@@ -8,35 +8,42 @@ import {TodoModel} from "../../modules/todo/TodoModel";
 
 export const TodoItemScreen = observer(({navigation, route}: TodoItemScreenProps) => {
     const {todoViewModel, logsStore} = useRootStore();
-    let [currentItem, setCurrentItem] = useState<TodoModel>(null);
+    let [currentItem, setCurrentItem] = useState<TodoModel | null>(null);
 
     let todoList = todoViewModel.todoModel;
 
     useEffect(() => {
         if (todoList.length > 0) {
-            setCurrentItem(todoList.find(item => item.id === route.params.itemId));
+            let foundItem = todoList.find(item => item.id === route.params.itemId);
+            setCurrentItem(foundItem !== undefined ? foundItem : null);
         }
     }, [todoList]);
 
     const handleRemoveTodoItem = async () => {
         try {
+            if (currentItem === null)
+                return;
+
             todoViewModel.actionHandleRemoveTodo(route.params.itemId);
             await logsStore.actionHandleAddLog("Rm", currentItem.title);
 
             if (navigation.canGoBack())
                 navigation.goBack();
 
-        } catch (reason) {
-            alert(reason);
+        } catch (reason: any) {
+            Alert.alert(reason.name, reason.message);
         }
     };
 
     const handleCompleteTodoItem = async () => {
         try {
+            if (currentItem === null)
+                return;
+
             todoViewModel.actionHandleMarkAsComplete(route.params.itemId);
             await logsStore.actionHandleAddLog("MarkAsDone", currentItem.title);
-        } catch (reason) {
-            alert(reason);
+        } catch (reason: any) {
+            Alert.alert(reason.name, reason.message);
         }
     };
 

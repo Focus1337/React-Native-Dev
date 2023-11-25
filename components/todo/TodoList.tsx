@@ -11,7 +11,7 @@ export function TodoList({todos}: TodoListProps) {
         <View style={styles.container}>
             <FlatList
                 data={todos}
-                keyExtractor={(item, index) => index.toString()}
+                keyExtractor={(_, index) => index.toString()}
                 renderItem={({item, index}) =>
                     <TodoItem listId={index} id={item.id} title={`${item.title}`} done={item.completed}/>}
             />

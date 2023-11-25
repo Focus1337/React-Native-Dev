@@ -1,8 +1,8 @@
 import LocalClient from "../../utils/clients/LocalClient";
 
 export default class LogRepository {
-    private readonly localClient: LocalClient = null;
-    private readonly key: string = null;
+    private readonly localClient: LocalClient;
+    private readonly key: string;
 
     constructor(key: string) {
         this.localClient = new LocalClient();
