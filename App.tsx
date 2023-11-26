@@ -1,25 +1,27 @@
 import {NavigationContainer} from "@react-navigation/native";
 import {MainScreen} from "./screens/todo/MainScreen";
 import {TodoItemScreen} from "./screens/todo/TodoItemScreen";
-import {DoneListScreen} from "./screens/todo/DoneListScreen";
 import {StatusBar} from "react-native";
 import {NativeStackParamList} from "./utils/types";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {LogsScreen} from "./screens/log/LogsScreen";
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const Stack = createNativeStackNavigator<NativeStackParamList>();
+
 export default function App() {
     return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName={'Main'}>
-                <Stack.Screen name={'Main'} component={MainScreen} options={{headerShown: false}}/>
-                <Stack.Screen name={'TodoItem'} component={TodoItemScreen}
-                              options={({route}) =>
-                                  ({title: `Task ${route.params.itemId}`})}/>
-                <Stack.Screen name={'DoneList'} component={DoneListScreen} options={{headerShown: false}}/>
-                <Stack.Screen name={'Logs'} component={LogsScreen} options={{headerShown: false}}/>
-            </Stack.Navigator>
-            <StatusBar barStyle={'dark-content'} backgroundColor={'white'}/>
-        </NavigationContainer>
+        <GestureHandlerRootView style={{flex: 1}}>
+            <NavigationContainer>
+                <Stack.Navigator initialRouteName={'Main'}>
+                    <Stack.Screen name={'Main'} component={MainScreen} options={{headerShown: false}}/>
+                    <Stack.Screen name={'TodoItem'} component={TodoItemScreen}
+                                  options={({route}) =>
+                                      ({title: `Task ${route.params.itemId}`})}/>
+                    <Stack.Screen name={'Logs'} component={LogsScreen} options={{headerShown: false}}/>
+                </Stack.Navigator>
+                <StatusBar barStyle={'dark-content'} backgroundColor={'white'}/>
+            </NavigationContainer>
+        </GestureHandlerRootView>
     );
 }

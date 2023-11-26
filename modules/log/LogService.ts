@@ -9,20 +9,21 @@ export default class LogService {
     }
 
     getLogsAsync = async (): Promise<LogModel[]> => {
+        let logs: LogModel[] = [];
         try {
             let result = await this.logRepository.getLogs();
             if (result === null)
                 return [];
 
-            let logs: LogModel[] = JSON.parse(result);
+            logs = JSON.parse(result);
             if (logs === undefined)
                 return [];
-
             return logs;
-
         } catch (e) {
             console.log(e);
         }
+
+        return logs;
     };
 
     setLogsAsync = async (logs: LogModel[]) =>

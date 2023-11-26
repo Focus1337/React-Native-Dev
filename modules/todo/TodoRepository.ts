@@ -1,16 +1,11 @@
 import 'react-native-get-random-values'
 import {RemoteTodoModel} from "./RemoteTodoModel";
-import AxiosClient from "../../utils/clients/AxiosClient";
+import axios from "../../utils/clients/axios";
 
 export default class TodoRepository {
-    private readonly apiClient: AxiosClient;
-
-    constructor() {
-        this.apiClient = new AxiosClient(null);
-    }
 
     async getAllAsync(): Promise<RemoteTodoModel[]> {
-        let value = await this.apiClient.get<RemoteTodoModel[]>({url: '/todos?_start=0&_limit=30'});
+        let value = await axios.get<RemoteTodoModel[]>('/todos?_start=0&_limit=30');
         return value.data;
     }
 }
