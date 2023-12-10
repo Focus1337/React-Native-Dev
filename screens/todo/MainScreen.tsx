@@ -9,10 +9,24 @@ import {useRootStore} from "../../hooks/useRootStore";
 import {observer} from "mobx-react";
 import {TodoModel} from "../../modules/todo/TodoModel";
 import {Skeleton, SkeletonGroup} from "react-native-skeleton-loaders";
+import {useTranslation} from "react-i18next";
+import {LangStore} from "../../modules/lang/LangStore";
+import {LangType} from "../../modules/lang/LangType";
 
 export const MainScreen = observer(({navigation}: MainScreenProps) => {
     let [title, setTitle] = useState<string>('');
     let {todoViewModel, logsStore} = useRootStore();
+    const {t} = useTranslation();
+
+    const langStore = new LangStore();
+
+    const handleChangeLong = async () => {
+        await langStore.changeLang(langStore.lang == LangType.RU ? LangType.EN : LangType.RU);
+    }
+
+    useEffect(() => {
+        (async () => await langStore.getLang())();
+    }, []);
 
     useEffect(() => {
         todoViewModel.actionHandleGetTodo();
@@ -35,15 +49,16 @@ export const MainScreen = observer(({navigation}: MainScreenProps) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={{alignSelf: 'center', fontWeight: 'bold'}}>New Tasks</Text>
+            <Text style={{alignSelf: 'center', fontWeight: 'bold'}}>{t('main.header')}</Text>
             {todoViewModel.isLoading ? <LoadingContent/> :
                 <TodoList todos={todoViewModel.todoModel.slice().filter(item => !item.completed)}/>}
             <View style={styles.inputContainer}>
-                <TextInput style={styles.textInput} multiline={true} placeholder='Make a sandwich' value={title}
+                <TextInput style={styles.textInput} multiline={true} placeholder={t('main.input-hint')} value={title}
                            onChangeText={newText => setTitle(newText)}/>
-                <CustomButton title="ADD" onPress={handleAddTodoItem}/>
-                <CustomButton title="Completed tasks" onPress={handleNavigationToCompletedTasks}/>
-                <CustomButton title="Logs" onPress={handleNavigationToLogs}/>
+                <CustomButton title={t('main.add-button-text')} onPress={handleAddTodoItem}/>
+                <CustomButton title={t('main.completed-tasks-button-text')} onPress={handleNavigationToCompletedTasks}/>
+                <CustomButton title={t('main.logs-button-text')} onPress={handleNavigationToLogs}/>
+                <CustomButton title={t('main.change-language-button-text')} onPress={handleChangeLong}/>
             </View>
         </SafeAreaView>
     )

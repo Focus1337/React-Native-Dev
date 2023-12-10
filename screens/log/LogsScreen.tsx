@@ -4,10 +4,12 @@ import {useRootStore} from "../../hooks/useRootStore";
 import CustomButton from "../../components/CustomButton";
 import {LogsScreenProps} from "../../utils/types";
 import {useEffect} from "react";
+import {useTranslation} from "react-i18next";
 
 export const LogsScreen = observer(
     ({navigation}: LogsScreenProps) => {
         const {logsStore} = useRootStore();
+        const {t} = useTranslation();
 
         useEffect(() => {
             (async () => await logsStore.actionHandleUpdateLogs())();
@@ -16,7 +18,7 @@ export const LogsScreen = observer(
         return (
             <SafeAreaView style={styles.container}>
                 <View style={{flex: 1}}>
-                    <Text style={{alignSelf: 'center', fontWeight: 'bold'}}>Logs</Text>
+                    <Text style={{alignSelf: 'center', fontWeight: 'bold'}}>{t('logs.header')}</Text>
                     <FlatList
                         data={logsStore.logs}
                         keyExtractor={(_, index) => index.toString()}
@@ -24,8 +26,8 @@ export const LogsScreen = observer(
                     />
                 </View>
                 <View>
-                    <CustomButton onPress={async () => await logsStore.actionHandleRemoveLogs()} title={'Remove logs'}/>
-                    <CustomButton onPress={() => navigation.goBack()} title={'Back to tasks'}/>
+                    <CustomButton onPress={async () => await logsStore.actionHandleRemoveLogs()} title={t('logs.remove-logs-button-text')}/>
+                    <CustomButton onPress={() => navigation.goBack()} title={t('logs.back-button-text')}/>
                 </View>
             </SafeAreaView>
         );

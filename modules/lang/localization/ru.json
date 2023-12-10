@@ -1,0 +1,19 @@
+{
+  "main": {
+    "header": "Новые задачи",
+    "input-hint": "Сделать бутерброд",
+    "add-button-text": "Добавить",
+    "completed-tasks-button-text": "Завершенные задачи",
+    "logs-button-text": "Логи",
+    "change-language-button-text": "Сменить язык"
+  },
+  "completed-tasks": {
+    "header": "Завершенные задачи",
+    "back-button-text": "Назад"
+  },
+  "logs": {
+    "header": "Логи",
+    "remove-logs-button-text": "Очистить логи",
+    "back-button-text": "Назад"
+  }
+}

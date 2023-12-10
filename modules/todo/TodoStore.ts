@@ -1,6 +1,6 @@
 import {makeAutoObservable} from "mobx";
-import {TodoModel} from "../modules/todo/TodoModel";
-import TodoService from "../modules/todo/TodoService";
+import {TodoModel} from "./TodoModel";
+import TodoService from "./TodoService";
 
 export class TodoStore {
     todoModel: TodoModel[] = [];

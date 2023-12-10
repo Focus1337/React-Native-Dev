@@ -1,0 +1,19 @@
+{
+  "main": {
+    "header": "New Tasks",
+    "input-hint": "Make a sandwich",
+    "add-button-text": "Add",
+    "completed-tasks-button-text": "Completed tasks",
+    "logs-button-text": "Logs",
+    "change-language-button-text": "Change language"
+  },
+  "completed-tasks": {
+    "header": "Completed Tasks",
+    "back-button-text": "Back to tasks"
+  },
+  "logs": {
+    "header": "Logs",
+    "remove-logs-button-text": "Remove logs",
+    "back-button-text": "Back to tasks"
+  }
+}

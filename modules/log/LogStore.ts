@@ -1,8 +1,8 @@
-import LogService from "../modules/log/LogService";
-import {LogModel} from "../modules/log/LogModel";
+import LogService from "./LogService";
+import {LogModel} from "./LogModel";
 import {v4 as uuidv4} from "uuid";
 
-export class LogsStore {
+export class LogStore {
     private logService: LogService;
     logs: string[] = [];
 
