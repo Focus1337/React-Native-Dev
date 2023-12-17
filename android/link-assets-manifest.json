@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Benzin-Medium.ttf",
+      "sha1": "b962f04f5cfe3a0bbc4a160059783a8730fe6b09"
+    },
+    {
+      "path": "assets/fonts/Benzin-Regular.ttf",
+      "sha1": "743276450ad8ea4fa2ae397902dcf55841176bf4"
+    },
+    {
+      "path": "assets/fonts/Benzin-Semibold.ttf",
+      "sha1": "c29522fc6981eb48aa2816e68e17d426d1f3f49e"
+    }
+  ]
+}

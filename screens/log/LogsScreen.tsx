@@ -1,7 +1,7 @@
 import {observer} from "mobx-react";
 import {FlatList, SafeAreaView, Text, View} from "react-native";
 import {useRootStore} from "../../hooks/useRootStore";
-import CustomButton from "../../components/CustomButton";
+import Button from "../../components/Button";
 import {LogsScreenProps} from "../../utils/types";
 import {useEffect} from "react";
 import {useTranslation} from "react-i18next";
@@ -30,9 +30,9 @@ export const LogsScreen = observer(
                     />
                 </View>
                 <View>
-                    <CustomButton onPress={async () => await logsStore.actionHandleRemoveLogs()}
-                                  title={t('logs.remove-logs-button-text')}/>
-                    <CustomButton onPress={() => navigation.goBack()} title={t('logs.back-button-text')}/>
+                    <Button onPress={async () => await logsStore.actionHandleRemoveLogs()}
+                            title={t('logs.remove-logs-button-text')}/>
+                    <Button onPress={() => navigation.goBack()} title={t('logs.back-button-text')}/>
                 </View>
             </SafeAreaView>
         );

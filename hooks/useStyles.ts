@@ -23,13 +23,14 @@ export const useStyles = (colors: IColors) =>
             borderRadius: 8,
             borderStyle: "solid",
             borderColor: colors.borderPrimary,
-            color: colors.textPrimary
+            color: colors.textPrimary,
+            fontFamily: "Benzin-Regular"
         },
 
         screenHeader: {
             alignSelf: 'center',
-            fontWeight: 'bold',
-            color: colors.textPrimary
+            color: colors.textPrimary,
+            fontFamily: "Benzin-Semibold"
         },
 
         todoContainer: {
@@ -43,12 +44,14 @@ export const useStyles = (colors: IColors) =>
 
         todoTitle: {
             marginBottom: 12,
-            color: colors.textPrimary
+            color: colors.textPrimary,
+            fontFamily: "Benzin-Regular"
         },
 
         todoText: {
             fontSize: 20,
-            color: colors.textPrimary
+            color: colors.textPrimary,
+            fontFamily: "Benzin-Regular"
         },
 
         todoMetadata: {
@@ -57,10 +60,35 @@ export const useStyles = (colors: IColors) =>
         },
 
         primaryText: {
-            color: colors.textPrimary
+            color: colors.textPrimary,
+            fontFamily: "Benzin-Regular"
         },
 
         secondaryText: {
-            color: colors.textSecondary
+            color: colors.textSecondary,
+            fontFamily: "Benzin-Regular"
+        },
+
+        button: {
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingVertical: 6,
+            paddingHorizontal: 32,
+            borderRadius: 8,
+        },
+
+        buttonText: {
+            color: colors.textPrimary,
+            fontFamily: "Benzin-Medium"
+        },
+
+        completedTodoText: {
+            color: 'seagreen',
+            fontFamily: "Benzin-Regular"
+        },
+
+        notCompletedTodoText: {
+            color: 'coral',
+            fontFamily: "Benzin-Regular"
         }
     });

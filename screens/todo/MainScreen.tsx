@@ -3,7 +3,7 @@ import {TodoList} from "../../components/todo/TodoList";
 import 'react-native-get-random-values'
 import {v4 as uuidv4} from 'uuid';
 import {MainScreenProps} from "../../utils/types";
-import CustomButton from "../../components/CustomButton";
+import Button from "../../components/Button";
 import React, {useEffect, useState} from "react";
 import {useRootStore} from "../../hooks/useRootStore";
 import {observer} from "mobx-react";
@@ -65,11 +65,11 @@ export const MainScreen = observer(({navigation}: MainScreenProps) => {
             <View style={styles.inputContainer}>
                 <TextInput style={styles.textInput} multiline={true} placeholder={t('main.input-hint')} placeholderTextColor={styles.secondaryText.color} value={title}
                            onChangeText={newText => setTitle(newText)}/>
-                <CustomButton title={t('main.add-button-text')} onPress={handleAddTodoItem}/>
-                <CustomButton title={t('main.completed-tasks-button-text')} onPress={handleNavigationToCompletedTasks}/>
-                <CustomButton title={t('main.logs-button-text')} onPress={handleNavigationToLogs}/>
-                <CustomButton title={t('main.change-language-button-text')} onPress={handleChangeLong}/>
-                <CustomButton title={t('main.change-theme-button-text')} onPress={handleChangeTheme}/>
+                <Button title={t('main.add-button-text')} onPress={handleAddTodoItem}/>
+                <Button title={t('main.completed-tasks-button-text')} onPress={handleNavigationToCompletedTasks}/>
+                <Button title={t('main.logs-button-text')} onPress={handleNavigationToLogs}/>
+                <Button title={t('main.change-language-button-text')} onPress={handleChangeLong}/>
+                <Button title={t('main.change-theme-button-text')} onPress={handleChangeTheme}/>
             </View>
         </SafeAreaView>
     )

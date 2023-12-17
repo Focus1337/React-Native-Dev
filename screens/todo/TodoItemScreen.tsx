@@ -1,6 +1,6 @@
 import {Alert, SafeAreaView, Text, View} from "react-native";
 import {TodoItemScreenProps} from "../../utils/types";
-import CustomButton from "../../components/CustomButton";
+import Button from "../../components/Button";
 import {useEffect, useState} from "react";
 import {observer} from "mobx-react";
 import {useRootStore} from "../../hooks/useRootStore";
@@ -61,17 +61,17 @@ export const TodoItemScreen = observer(({navigation, route}: TodoItemScreenProps
                 <View style={styles.todoMetadata}>
                     {
                         currentItem.completed ?
-                            <Text style={{color: 'seagreen'}}>Completed</Text>
+                            <Text style={styles.completedTodoText}>Completed</Text>
                             :
-                            <Text style={{color: 'coral'}}>Not completed</Text>
+                            <Text style={styles.notCompletedTodoText}>Not completed</Text>
                     }
                     <Text style={styles.primaryText}>Created at [unavailable]</Text>
                 </View>
             </View>
 
             <View style={[styles.inputContainer, {flexDirection: 'row'}]}>
-                <CustomButton onPress={handleCompleteTodoItem} title={currentItem.completed ? 'Undone' : 'Mark Done'}/>
-                <CustomButton onPress={handleRemoveTodoItem} title={'Delete'}/>
+                <Button onPress={handleCompleteTodoItem} title={currentItem.completed ? 'Undone' : 'Mark Done'}/>
+                <Button onPress={handleRemoveTodoItem} title={'Delete'}/>
             </View>
         </SafeAreaView>)
     );
