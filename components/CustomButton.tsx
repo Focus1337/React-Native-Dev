@@ -1,5 +1,7 @@
 import {GestureResponderEvent, Pressable, StyleSheet, Text} from "react-native";
 import React from "react";
+import {useTheme} from "../hooks/useTheme";
+import {useStyles} from "../hooks/useStyles";
 
 interface customButtonProps {
     onPress: (event: GestureResponderEvent) => void,
@@ -8,15 +10,17 @@ interface customButtonProps {
 
 export default function CustomButton(props: customButtonProps) {
     const {onPress, title = 'Save'} = props;
+    const {Colors} = useTheme();
+    const styles = useStyles(Colors);
 
     return (
-        <Pressable style={styles.customButton} onPress={onPress}>
-            <Text style={styles.customButtonText}>{title}</Text>
+        <Pressable style={customStyles.customButton} onPress={onPress}>
+            <Text style={[customStyles.customButtonText, styles.primaryText]}>{title}</Text>
         </Pressable>
     );
 }
 
-let styles = StyleSheet.create({
+let customStyles = StyleSheet.create({
     customButton: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -29,7 +33,6 @@ let styles = StyleSheet.create({
         fontSize: 18,
         lineHeight: 21,
         fontWeight: 'bold',
-        letterSpacing: 0.25,
-        color: 'black',
+        letterSpacing: 0.25
     },
 });

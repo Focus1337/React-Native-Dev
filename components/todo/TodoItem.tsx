@@ -1,6 +1,8 @@
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/core";
 import {MainScreenProps} from "../../utils/types";
+import {useTheme} from "../../hooks/useTheme";
+import {useStyles} from "../../hooks/useStyles";
 
 interface TodoItemProps {
     title: string,
@@ -11,14 +13,16 @@ interface TodoItemProps {
 
 export default function TodoItem({title, id, listId, done}: TodoItemProps) {
     const navigation = useNavigation<MainScreenProps['navigation']>();
+    const {Colors} = useTheme();
+    const genericStyles = useStyles(Colors);
 
     return (
         <View style={[styles.todoItem, done ? {borderColor: 'seagreen'} : {borderColor: 'coral'}]}>
             <TouchableOpacity style={styles.textContainer}
                               onPress={() => navigation.navigate('TodoItem', {itemId: id})}>
-                <Text style={styles.todoId}>{`${listId})`}</Text>
+                <Text style={[styles.todoId, genericStyles.primaryText]}>{`${listId})`}</Text>
                 <Text style={[done ? {textDecorationLine: 'line-through'} : {textDecorationLine: 'none'},
-                    styles.todoText]}>{title}</Text>
+                    styles.todoText, genericStyles.primaryText]}>{title}</Text>
             </TouchableOpacity>
         </View>
     );
@@ -41,7 +45,6 @@ let styles = StyleSheet.create({
     },
 
     todoText: {
-        marginRight: 12,
-        color: 'black',
+        marginRight: 12
     },
 });

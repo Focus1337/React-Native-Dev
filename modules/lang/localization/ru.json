@@ -5,7 +5,8 @@
     "add-button-text": "Добавить",
     "completed-tasks-button-text": "Завершенные задачи",
     "logs-button-text": "Логи",
-    "change-language-button-text": "Сменить язык"
+    "change-language-button-text": "Сменить язык",
+    "change-theme-button-text": "Сменить тему"
   },
   "completed-tasks": {
     "header": "Завершенные задачи",

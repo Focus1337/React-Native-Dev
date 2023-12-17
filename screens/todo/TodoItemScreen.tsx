@@ -1,16 +1,19 @@
-import {Alert, SafeAreaView, StyleSheet, Text, View} from "react-native";
+import {Alert, SafeAreaView, Text, View} from "react-native";
 import {TodoItemScreenProps} from "../../utils/types";
 import CustomButton from "../../components/CustomButton";
 import {useEffect, useState} from "react";
 import {observer} from "mobx-react";
 import {useRootStore} from "../../hooks/useRootStore";
 import {TodoModel} from "../../modules/todo/TodoModel";
+import {useTheme} from "../../hooks/useTheme";
+import {useStyles} from "../../hooks/useStyles";
 
 export const TodoItemScreen = observer(({navigation, route}: TodoItemScreenProps) => {
     const {todoViewModel, logsStore} = useRootStore();
     let [currentItem, setCurrentItem] = useState<TodoModel | null>(null);
-
     let todoList = todoViewModel.todoModel;
+    const {Colors} = useTheme();
+    const styles = useStyles(Colors);
 
     useEffect(() => {
         if (todoList.length > 0) {
@@ -48,11 +51,7 @@ export const TodoItemScreen = observer(({navigation, route}: TodoItemScreenProps
     };
 
     return (
-        currentItem && (<SafeAreaView style={styles.viewContainer}>
-            <View style={styles.imageContainer}>
-
-            </View>
-
+        currentItem && (<SafeAreaView style={styles.container}>
             <View style={styles.todoContainer}>
                 <View style={styles.todoTitle}>
                     <Text
@@ -66,49 +65,14 @@ export const TodoItemScreen = observer(({navigation, route}: TodoItemScreenProps
                             :
                             <Text style={{color: 'coral'}}>Not completed</Text>
                     }
-                    <Text>Created at [unavailable]</Text>
+                    <Text style={styles.primaryText}>Created at [unavailable]</Text>
                 </View>
             </View>
 
-            <View style={styles.inputContainer}>
+            <View style={[styles.inputContainer, {flexDirection: 'row'}]}>
                 <CustomButton onPress={handleCompleteTodoItem} title={currentItem.completed ? 'Undone' : 'Mark Done'}/>
                 <CustomButton onPress={handleRemoveTodoItem} title={'Delete'}/>
             </View>
         </SafeAreaView>)
     );
-});
-
-let styles = StyleSheet.create({
-    viewContainer: {
-        flex: 1,
-        backgroundColor: 'white'
-    },
-
-    todoContainer: {
-        marginHorizontal: 20,
-        marginTop: 50,
-        padding: 8,
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: 'black'
-    },
-
-    todoTitle: {
-        marginBottom: 12
-    },
-
-    todoText: {
-        fontSize: 20,
-    },
-
-    todoMetadata: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-
-    imageContainer: {},
-    inputContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center'
-    }
 });

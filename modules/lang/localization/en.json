@@ -5,7 +5,8 @@
     "add-button-text": "Add",
     "completed-tasks-button-text": "Completed tasks",
     "logs-button-text": "Logs",
-    "change-language-button-text": "Change language"
+    "change-language-button-text": "Change language",
+    "change-theme-button-text": "Change theme"
   },
   "completed-tasks": {
     "header": "Completed Tasks",

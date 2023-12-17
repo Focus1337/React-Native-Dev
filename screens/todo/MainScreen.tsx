@@ -1,4 +1,4 @@
-import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
+import {SafeAreaView, ScrollView, Text, TextInput, View} from "react-native";
 import {TodoList} from "../../components/todo/TodoList";
 import 'react-native-get-random-values'
 import {v4 as uuidv4} from 'uuid';
@@ -12,16 +12,26 @@ import {Skeleton, SkeletonGroup} from "react-native-skeleton-loaders";
 import {useTranslation} from "react-i18next";
 import {LangStore} from "../../modules/lang/LangStore";
 import {LangType} from "../../modules/lang/LangType";
+import {useTheme} from "../../hooks/useTheme";
+import {useStyles} from "../../hooks/useStyles";
+
+import {ThemeTypes} from "../../modules/theme/ThemeTypes";
 
 export const MainScreen = observer(({navigation}: MainScreenProps) => {
     let [title, setTitle] = useState<string>('');
     let {todoViewModel, logsStore} = useRootStore();
     const {t} = useTranslation();
+    const {Colors, selectTheme, changeTheme} = useTheme();
+    const styles = useStyles(Colors);
 
     const langStore = new LangStore();
 
     const handleChangeLong = async () => {
         await langStore.changeLang(langStore.lang == LangType.RU ? LangType.EN : LangType.RU);
+    }
+
+    const handleChangeTheme = async () => {
+        changeTheme(selectTheme === ThemeTypes.LIGHT ? ThemeTypes.DARK : ThemeTypes.LIGHT)
     }
 
     useEffect(() => {
@@ -49,16 +59,17 @@ export const MainScreen = observer(({navigation}: MainScreenProps) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={{alignSelf: 'center', fontWeight: 'bold'}}>{t('main.header')}</Text>
+            <Text style={styles.screenHeader}>{t('main.header')}</Text>
             {todoViewModel.isLoading ? <LoadingContent/> :
                 <TodoList todos={todoViewModel.todoModel.slice().filter(item => !item.completed)}/>}
             <View style={styles.inputContainer}>
-                <TextInput style={styles.textInput} multiline={true} placeholder={t('main.input-hint')} value={title}
+                <TextInput style={styles.textInput} multiline={true} placeholder={t('main.input-hint')} placeholderTextColor={styles.secondaryText.color} value={title}
                            onChangeText={newText => setTitle(newText)}/>
                 <CustomButton title={t('main.add-button-text')} onPress={handleAddTodoItem}/>
                 <CustomButton title={t('main.completed-tasks-button-text')} onPress={handleNavigationToCompletedTasks}/>
                 <CustomButton title={t('main.logs-button-text')} onPress={handleNavigationToLogs}/>
                 <CustomButton title={t('main.change-language-button-text')} onPress={handleChangeLong}/>
+                <CustomButton title={t('main.change-theme-button-text')} onPress={handleChangeTheme}/>
             </View>
         </SafeAreaView>
     )
@@ -73,27 +84,3 @@ const LoadingContent = () => {
         </ScrollView>
     );
 };
-
-let styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingBottom: 20,
-        backgroundColor: 'white'
-    },
-
-    inputContainer: {
-        justifyContent: "center",
-        paddingVertical: 10,
-        paddingHorizontal: 40,
-    },
-
-    textInput: {
-        marginBottom: 10,
-        padding: 4,
-        minWidth: 80,
-        borderWidth: 1,
-        borderRadius: 8,
-        borderStyle: "solid",
-        borderColor: "black",
-    },
-});
